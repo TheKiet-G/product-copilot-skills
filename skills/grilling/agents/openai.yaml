@@ -1,0 +1,4 @@
+interface:
+  display_name: "Grilling"
+  short_description: "Relentlessly stress-test assumptions in a ticket, PRD, or decision one question at a time."
+  default_prompt: "Use $grilling to stress-test the current artifact or plan before drafting."

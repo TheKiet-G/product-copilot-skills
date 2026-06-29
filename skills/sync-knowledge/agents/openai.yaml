@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sync Knowledge"
+  short_description: "Sync GE knowledge base against Confluence via MCP."
+  default_prompt: "Use $sync-knowledge to check and re-ingest changed Confluence pages for the Growth Enablement project."

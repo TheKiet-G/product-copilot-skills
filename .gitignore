@@ -1,0 +1,31 @@
+.DS_Store
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local secrets and machine-specific config
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.jks
+secrets/
+private/
+.codex/
+*.local.toml
+*.local.json
+
+# Generated artifacts and user/customer outputs
+outputs/
+artifacts/
+
+# Durable knowledge generated from private project documents.
+# Keep the empty framework/template in source control, but do not commit
+# project-specific Confluence/Jira ingests, proposals, or audit logs by default.
+knowledge/audit/
+knowledge/proposals/
+knowledge/projects/*
+!knowledge/projects/_template/
+!knowledge/projects/_template/**
+knowledge/global/facts.jsonl

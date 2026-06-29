@@ -1,0 +1,6 @@
+---
+description: Use portable Product Copilot workflows for product requirements and artifacts
+alwaysApply: true
+---
+
+Use `AGENTS.md` as the product workflow adapter. Read only the relevant `skills/*/SKILL.md`. Recall context through `product-core`; never treat the current chat as durable memory. Ask blocking clarification questions in Vietnamese before drafting. Keep governed changes in `knowledge/proposals/`.

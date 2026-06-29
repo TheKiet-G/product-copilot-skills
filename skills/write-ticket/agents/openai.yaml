@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Ticket"
+  short_description: "Draft traceable product ticket descriptions"
+  default_prompt: "Use $write-ticket to draft a Vietnamese ticket from the available project context."

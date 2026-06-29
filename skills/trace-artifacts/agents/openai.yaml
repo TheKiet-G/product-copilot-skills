@@ -1,0 +1,4 @@
+interface:
+  display_name: "Trace Artifacts"
+  short_description: "Check consistency across product artifacts"
+  default_prompt: "Use $trace-artifacts to verify consistency across this ticket, PRD, and sequence diagram."

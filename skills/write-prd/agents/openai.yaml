@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write PRD"
+  short_description: "Draft source-backed product requirements"
+  default_prompt: "Use $write-prd to draft a Vietnamese PRD from the approved project context."

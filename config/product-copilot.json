@@ -1,0 +1,31 @@
+{
+  "default_language": "vi",
+  "preserve_english_technical_terms": true,
+  "default_project": null,
+  "retrieval": {
+    "default_budget_chars": 12000,
+    "max_results": 20
+  },
+  "safe_auto_learning_kinds": [
+    "glossary",
+    "system-fact",
+    "preference",
+    "source-link",
+    "approved-decision"
+  ],
+  "governed_kinds": [
+    "business-rule",
+    "policy",
+    "template",
+    "instruction",
+    "conflict-resolution"
+  ],
+  "sensitive_markers": [
+    "password",
+    "secret",
+    "api_key",
+    "access_token",
+    "private key",
+    "confidential"
+  ]
+}

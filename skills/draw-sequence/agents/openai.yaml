@@ -1,0 +1,4 @@
+interface:
+  display_name: "Draw Sequence"
+  short_description: "Create traceable Mermaid sequence diagrams"
+  default_prompt: "Use $draw-sequence to create a Mermaid sequence diagram for this product flow."

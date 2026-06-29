@@ -1,0 +1,4 @@
+interface:
+  display_name: "Analyze Requirement"
+  short_description: "Analyze requirements, risks, and edge cases"
+  default_prompt: "Use $analyze-requirement to clarify this requirement and identify acceptance criteria and risks."

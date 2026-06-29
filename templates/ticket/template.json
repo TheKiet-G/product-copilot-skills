@@ -1,0 +1,18 @@
+{
+  "type": "ticket",
+  "installed": true,
+  "version": "2026-06-16",
+  "template_file": "change-request-template.md",
+  "required_headings": [
+    "Context",
+    "Requirement",
+    "Acceptance Criteria"
+  ],
+  "requirement_variants": [
+    "Product",
+    "Back-end & Front-end Technical",
+    "Configuration"
+  ],
+  "exactly_one_requirement_variant": true,
+  "source": "Change+Request+Template.doc"
+}

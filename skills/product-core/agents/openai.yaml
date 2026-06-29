@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Core"
+  short_description: "Persistent product memory and retrieval core"
+  default_prompt: "Use $product-core to recall project context and update durable product knowledge."
