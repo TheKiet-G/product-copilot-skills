@@ -1,63 +1,63 @@
 # Product Copilot Skills
 
-Portable, Git-backed product skills for Codex, Claude Code, Cursor, and other agent clients.
+Bộ skill Product Copilot dạng portable, Git-backed, dùng được cho Codex, Claude Code, Cursor và các agent client khác.
 
-This repository turns a general coding/product assistant into a source-backed Product Copilot. It helps product teams read durable project knowledge, ask the right clarification questions, draft Jira tickets and PRDs, draw sequence diagrams, trace requirements across artifacts, and safely improve the shared knowledge base without depending on chat history.
+Repo này biến một coding/product assistant thông thường thành Product Copilot có khả năng làm việc dựa trên nguồn dữ liệu bền vững. Nó giúp team Product đọc lại knowledge cũ, hỏi đúng câu clarification, viết Jira ticket, viết PRD, vẽ sequence diagram, trace requirement giữa nhiều artifact, và cập nhật knowledge base một cách an toàn thay vì phụ thuộc vào chat history.
 
-The core idea is simple:
+Ý tưởng lõi:
 
-1. Store reusable product context in `knowledge/`.
-2. Route every product task through small, explicit skills in `skills/`.
-3. Keep business rules, templates, and policies governed through proposals instead of silently rewriting them.
-4. Validate generated artifacts before handoff.
+1. Lưu product context có thể tái sử dụng trong `knowledge/`.
+2. Route mỗi product task qua các skill nhỏ, rõ trách nhiệm trong `skills/`.
+3. Không tự ý sửa business rules, templates, policies; mọi thay đổi governed đi qua proposal.
+4. Validate artifact trước khi handoff.
 
-## What problem this solves
+## Repo này giải quyết bài toán gì?
 
-Product work often breaks because context lives in scattered chats, Confluence pages, Jira tickets, screenshots, or a single person's memory. A normal AI chat may answer well once, then forget the old context or silently invent missing business behavior.
+Product work thường bị gãy vì context nằm rải rác trong chat, Confluence, Jira, Figma, screenshot hoặc trí nhớ của một vài người. Một AI chat thông thường có thể trả lời tốt trong một session, nhưng qua session khác lại quên context cũ hoặc âm thầm tự bịa business behavior còn thiếu.
 
-This skill set is designed to solve that:
+Bộ skill này được thiết kế để xử lý các vấn đề đó:
 
-- Recall old source-backed context across sessions.
-- Keep Confluence/Jira/project knowledge searchable through Git-backed Markdown/JSONL.
-- Separate facts, assumptions, open questions, and proposed business rules.
-- Produce Vietnamese product artifacts while preserving English technical terms.
-- Standardize ticket, PRD, sequence, traceability, and requirement-review workflows.
-- Avoid leaking tokens, API keys, local config, or private generated outputs into source control.
+- Recall context cũ có source rõ ràng qua nhiều session.
+- Biến Confluence/Jira/project knowledge thành Markdown/JSONL có thể search bằng Git-backed memory.
+- Tách rõ facts, assumptions, open questions và proposed business rules.
+- Sinh artifact tiếng Việt nhưng giữ nguyên English technical terms.
+- Chuẩn hóa workflow viết ticket, PRD, sequence diagram, traceability và requirement review.
+- Tránh đưa token, API key, local config hoặc generated output riêng tư lên source control.
 
-## Repository layout
+## Cấu trúc repo
 
 ```text
 .
-├── AGENTS.md                         # Codex adapter
-├── CLAUDE.md                         # Claude Code adapter
-├── .cursor/rules/product-copilot.mdc # Cursor adapter
-├── config/product-copilot.json       # Safe learning / governed learning config
-├── skills/                           # Modular Product Copilot skills
-├── templates/                        # Ticket / PRD templates and template status
-├── knowledge/                        # Git-backed memory framework
-│   ├── global/                       # Optional global context skeleton
-│   └── projects/_template/           # Empty project template
-└── tests/                            # CLI regression tests
+├── AGENTS.md                         # Adapter cho Codex
+├── CLAUDE.md                         # Adapter cho Claude Code
+├── .cursor/rules/product-copilot.mdc # Adapter cho Cursor
+├── config/product-copilot.json       # Config safe learning / governed learning
+├── skills/                           # Các Product Copilot skills dạng module
+├── templates/                        # Ticket / PRD templates và template status
+├── knowledge/                        # Khung Git-backed memory
+│   ├── global/                       # Skeleton cho global context nếu cần
+│   └── projects/_template/           # Template rỗng cho project mới
+└── tests/                            # Regression tests cho CLI
 ```
 
-Generated outputs, private Confluence/Jira ingests, proposals, audit logs, and local secrets are intentionally ignored by `.gitignore`.
+Các file generated, private Confluence/Jira ingests, proposals, audit logs và local secrets được ignore trong `.gitignore`.
 
-## Skill set
+## Danh sách skill
 
-| Skill | Purpose | Use when |
+| Skill | Dùng để làm gì | Khi nào dùng |
 |---|---|---|
-| `product-core` | Durable memory layer: initialize project knowledge, ingest documents, recall relevant context, learn safe facts, propose governed changes, validate artifacts. | Any product task that needs source-backed context. This should run first. |
-| `analyze-requirement` | Review a requirement for ambiguity, business rules, edge cases, dependencies, acceptance criteria, and readiness. | Before writing a ticket/PRD or when a requirement feels unclear. |
-| `write-ticket` | Draft Jira-style ticket descriptions in Vietnamese with source metadata and acceptance criteria. | Creating or revising implementation-ready Jira tickets. |
-| `write-prd` | Draft source-backed PRDs with stable requirement IDs and explicit assumptions/open questions. | Creating or expanding PRDs from docs, Figma, tickets, or discovery notes. |
-| `draw-sequence` | Create Mermaid sequence diagrams for API/service/user/event flows. | Visualizing happy path, error path, retry, timeout, async interactions. |
-| `trace-artifacts` | Check consistency across tickets, PRDs, acceptance criteria, and sequence diagrams. | Preparing artifacts for grooming, handoff, or implementation. |
-| `sync-knowledge` | Compare ingested Confluence page versions against live Confluence and re-ingest changed pages. | After Confluence changes or when knowledge may be stale. Requires Atlassian MCP/connector. |
-| `grilling` | Stress-test assumptions one by one before finalizing an artifact or decision. | You want a hard review before committing to a plan/PRD/ticket. |
+| `product-core` | Memory layer: init project knowledge, ingest document, recall context, learn safe facts, propose governed changes, validate artifacts. | Luôn chạy đầu tiên với product task cần context/source. |
+| `analyze-requirement` | Phân tích requirement về ambiguity, business rules, edge cases, dependencies, acceptance criteria và readiness. | Trước khi viết ticket/PRD hoặc khi requirement còn mơ hồ. |
+| `write-ticket` | Draft Jira-style ticket bằng tiếng Việt, có metadata source và acceptance criteria. | Khi cần tạo/sửa Jira ticket đủ rõ để grooming/dev. |
+| `write-prd` | Draft PRD có source, stable requirement IDs, assumptions và open questions. | Khi cần viết PRD từ Confluence, Figma, ticket, discovery notes hoặc project knowledge. |
+| `draw-sequence` | Tạo Mermaid sequence diagram cho API/service/user/event flow. | Khi cần visualize happy path, error path, retry, timeout, async interaction. |
+| `trace-artifacts` | Kiểm tra consistency và traceability giữa ticket, PRD, acceptance criteria và sequence diagram. | Trước grooming/handoff hoặc khi nhiều artifact có nguy cơ lệch nhau. |
+| `sync-knowledge` | So sánh version page Confluence đã ingest với live Confluence, rồi re-ingest page thay đổi. | Sau khi Confluence update hoặc nghi ngờ knowledge stale. Cần Atlassian MCP/connector. |
+| `grilling` | Stress-test assumption từng câu một trước khi finalize artifact/decision. | Khi muốn review gắt PRD/ticket/plan trước khi commit hướng làm. |
 
-## How the skills work together
+## Các skill phối hợp với nhau như thế nào?
 
-For product tasks, the intended workflow is:
+Workflow chuẩn cho product task:
 
 ```text
 User request
@@ -70,46 +70,47 @@ exactly one task skill
   ↓
 artifact validation / traceability
   ↓
-safe learning or governed proposal
+safe learning hoặc governed proposal
 ```
 
-Example:
+Ví dụ:
 
-- For a Jira ticket: `product-core` → `write-ticket`
-- For a PRD: `product-core` → `write-prd`
-- For requirement review: `product-core` → `analyze-requirement`
-- For sequence diagram: `product-core` → `draw-sequence`
-- For cross-checking PRD/ticket/diagram: `product-core` → `trace-artifacts`
+- Viết Jira ticket: `product-core` → `write-ticket`
+- Viết PRD: `product-core` → `write-prd`
+- Review requirement: `product-core` → `analyze-requirement`
+- Vẽ sequence diagram: `product-core` → `draw-sequence`
+- Cross-check PRD/ticket/diagram: `product-core` → `trace-artifacts`
+- Sync Confluence knowledge: `product-core` → `sync-knowledge`
 
-`product-core` is deliberately separated from drafting skills. It is responsible for memory and governance; task skills are responsible for one artifact type.
+`product-core` được tách riêng khỏi các drafting skills. Nó phụ trách memory và governance; các task skill chỉ tập trung vào một loại artifact.
 
 ## Agent adapters
 
-Different AI clients read different instruction files, but all adapters point to the same skill source:
+Mỗi AI client đọc instruction file khác nhau, nhưng tất cả đều trỏ về cùng một skill source:
 
-- Codex reads `AGENTS.md`.
-- Claude Code reads `CLAUDE.md`.
-- Cursor reads `.cursor/rules/product-copilot.mdc`.
-- Claude slash-style commands live in `.claude/commands/`.
+- Codex đọc `AGENTS.md`.
+- Claude Code đọc `CLAUDE.md`.
+- Cursor đọc `.cursor/rules/product-copilot.mdc`.
+- Claude slash-style commands nằm trong `.claude/commands/`.
 
-The adapters intentionally stay thin. The source of truth is always `skills/*/SKILL.md`.
+Adapter chỉ nên mỏng và trung lập. Source of truth luôn là `skills/*/SKILL.md`.
 
 ## Quick start
 
-Install dependencies:
+Cài dependencies:
 
 ```bash
 python3 -m pip install -r requirements.txt
 ```
 
-Initialize a project memory space:
+Khởi tạo memory space cho project:
 
 ```bash
 python3 skills/product-core/scripts/product_memory.py init-project \
   --project my-project
 ```
 
-Ingest a local document:
+Ingest local document:
 
 ```bash
 python3 skills/product-core/scripts/product_memory.py ingest \
@@ -117,7 +118,7 @@ python3 skills/product-core/scripts/product_memory.py ingest \
   --source path/to/document.md
 ```
 
-Ingest exported Confluence text:
+Ingest text export từ Confluence:
 
 ```bash
 confluence-export-command | python3 skills/product-core/scripts/product_memory.py ingest-text \
@@ -126,7 +127,7 @@ confluence-export-command | python3 skills/product-core/scripts/product_memory.p
   --title "Page title"
 ```
 
-Recall relevant context:
+Recall context liên quan:
 
 ```bash
 python3 skills/product-core/scripts/product_memory.py recall \
@@ -136,7 +137,7 @@ python3 skills/product-core/scripts/product_memory.py recall \
   --max-results 20
 ```
 
-Validate an artifact:
+Validate artifact:
 
 ```bash
 python3 skills/product-core/scripts/product_memory.py validate-artifact \
@@ -144,13 +145,13 @@ python3 skills/product-core/scripts/product_memory.py validate-artifact \
   --file outputs/ticket-description/GE-123_example.md
 ```
 
-## Memory and governance model
+## Memory và governance model
 
-`product-core` supports two paths:
+`product-core` có 2 đường cập nhật knowledge.
 
 ### Safe learning
 
-Use `learn` for low-risk, source-backed facts:
+Dùng `learn` cho facts có source rõ và ít rủi ro:
 
 - glossary terms;
 - source links;
@@ -158,7 +159,7 @@ Use `learn` for low-risk, source-backed facts:
 - non-sensitive preferences;
 - approved decisions.
 
-Example:
+Ví dụ:
 
 ```bash
 python3 skills/product-core/scripts/product_memory.py learn \
@@ -170,16 +171,16 @@ python3 skills/product-core/scripts/product_memory.py learn \
 
 ### Governed proposals
 
-Use `propose` for anything that should not become truth automatically:
+Dùng `propose` cho các nội dung không nên tự động trở thành sự thật:
 
 - business rules;
 - policies;
 - templates;
 - agent instructions;
 - conflict resolution;
-- low-confidence inferred behavior.
+- inferred behavior có confidence thấp.
 
-Example:
+Ví dụ:
 
 ```bash
 python3 skills/product-core/scripts/product_memory.py propose \
@@ -189,25 +190,25 @@ python3 skills/product-core/scripts/product_memory.py propose \
   --source "confluence://GP/pages/329219233?version=74"
 ```
 
-This creates a pending JSON proposal under `knowledge/proposals/` in the working tree. In this source repository, project-specific proposals are ignored by default because they often contain internal project context.
+Command này tạo pending JSON proposal dưới `knowledge/proposals/` trong working tree. Với source repo này, project-specific proposals được ignore mặc định vì thường chứa internal project context.
 
 ## Artifact templates
 
-Templates live under `templates/`.
+Templates nằm trong `templates/`.
 
-Ticket template status is configured in:
+Ticket template status:
 
 ```text
 templates/ticket/template.json
 ```
 
-PRD template status is configured in:
+PRD template status:
 
 ```text
 templates/prd/template.json
 ```
 
-Install an approved template:
+Install approved template:
 
 ```bash
 python3 skills/product-core/scripts/product_memory.py install-template \
@@ -219,15 +220,15 @@ python3 skills/product-core/scripts/product_memory.py install-template \
   --heading "Acceptance Criteria"
 ```
 
-Until a template is installed, the corresponding artifact validation intentionally fails. This is by design: the assistant must not present an artifact as final when the approved template is missing.
+Nếu template chưa được install, validation của artifact tương ứng sẽ fail có chủ đích. Đây là guardrail để assistant không được trình bày artifact như final khi approved template còn thiếu.
 
-## Confluence and Jira usage
+## Cách dùng với Confluence và Jira
 
-This repository does not store credentials.
+Repo này không lưu credentials.
 
-Use a local MCP connector, browser session, or export command to fetch Confluence/Jira content, then ingest the sanitized page body through `product_memory.py`.
+Dùng local MCP connector, browser session hoặc export command để lấy nội dung Confluence/Jira, sau đó ingest phần page body đã được sanitize qua `product_memory.py`.
 
-Recommended source format:
+Định dạng source khuyến nghị:
 
 ```text
 confluence://SPACE/pages/PAGE_ID?version=N
@@ -235,26 +236,26 @@ jira://PROJECT/ISSUE-ID
 figma://FILE_ID/node/NODE_ID
 ```
 
-When syncing Confluence through `sync-knowledge`, keep these rules:
+Khi sync Confluence bằng `sync-knowledge`, giữ các nguyên tắc:
 
-- compare page versions before re-ingesting;
-- deprecate old chunks instead of deleting them;
+- so sánh page version trước khi re-ingest;
+- deprecate old chunks thay vì xóa;
 - skip archive/meeting/report/credential pages;
-- do not ingest tokens, passwords, private endpoints, or personal secrets;
-- propose summary/index changes instead of auto-changing project policy.
+- không ingest token, password, private endpoint hoặc personal secrets;
+- propose thay đổi summary/index thay vì auto-change project policy.
 
-## Security and privacy
+## Security và privacy
 
-Do not commit:
+Không commit:
 
 - `~/.codex/config.toml`;
 - `.env` files;
 - API keys, PATs, Bearer tokens, Basic auth strings;
-- generated output containing customer/company data;
-- raw Confluence/Jira knowledge dumps unless your team explicitly wants that private repo to hold them;
-- screenshots or documents containing credentials.
+- generated output có customer/company data;
+- raw Confluence/Jira knowledge dumps, trừ khi team chủ động muốn private repo này giữ dữ liệu đó;
+- screenshots hoặc documents có credentials.
 
-`.gitignore` blocks common local secret and generated-output paths. Still, always run a secret scan before pushing.
+`.gitignore` đã chặn các path local secret và generated output phổ biến. Tuy vậy, trước khi push vẫn nên scan lại.
 
 Suggested checks:
 
@@ -266,13 +267,13 @@ git diff --cached
 
 ## Development
 
-Run tests:
+Chạy tests:
 
 ```bash
 python3 -m unittest discover -s tests -v
 ```
 
-Useful CLI help:
+CLI help:
 
 ```bash
 python3 skills/product-core/scripts/product_memory.py --help
@@ -280,33 +281,33 @@ python3 skills/product-core/scripts/product_memory.py recall --help
 python3 skills/product-core/scripts/product_memory.py validate-artifact --help
 ```
 
-## Typical prompts
+## Prompt mẫu
 
-Analyze a requirement:
+Analyze requirement:
 
 ```text
 Use product-core then analyze-requirement. Review this requirement and tell me if it is grooming-ready.
 ```
 
-Write a ticket:
+Write ticket:
 
 ```text
 Use write-ticket. Draft a Jira ticket for this behavior, save it to outputs/ticket-description.
 ```
 
-Write a PRD:
+Write PRD:
 
 ```text
 Use write-prd. Draft a PRD from this Confluence page and Figma screen.
 ```
 
-Draw a sequence:
+Draw sequence:
 
 ```text
 Use draw-sequence. Create a Mermaid sequence diagram for this API flow.
 ```
 
-Stress-test a plan:
+Stress-test plan:
 
 ```text
 Use grilling. Grill this PRD one assumption at a time.
@@ -318,14 +319,14 @@ Sync knowledge:
 Use sync-knowledge. Check the configured Confluence pages and re-ingest changed versions.
 ```
 
-## Design principles
+## Nguyên tắc thiết kế
 
-- Source-backed over chat-memory-backed.
-- Ask only blocking clarification questions.
-- Vietnamese user-facing output by default; preserve English technical terms.
-- Do not invent missing business behavior.
-- Small modular skills over one giant prompt.
-- Governed changes go to proposals.
-- Deprecated knowledge is retained for auditability.
-- Generated artifacts should be validated before handoff.
+- Source-backed hơn chat-memory-backed.
+- Chỉ hỏi blocking clarification questions.
+- User-facing output mặc định bằng tiếng Việt; giữ nguyên English technical terms.
+- Không tự bịa missing business behavior.
+- Dùng nhiều modular skills nhỏ thay vì một prompt khổng lồ.
+- Governed changes đi qua proposals.
+- Deprecated knowledge được giữ lại để audit.
+- Generated artifacts cần được validate trước khi handoff.
 
