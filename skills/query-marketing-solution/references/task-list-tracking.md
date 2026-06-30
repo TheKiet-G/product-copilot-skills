@@ -1,7 +1,9 @@
 # Task List tracking schema
 
-Source of truth: `confluence://GP/pages/219686355?version=27`  
-Page: `Task List tracking`  
+Source of truth: `confluence://GP/pages/219686355?version=27`
+
+Page: `Task List tracking`
+
 URL: `https://confluence.zalopay.vn/display/GP/Task+List+tracking`
 
 Use this reference only for Task List. Recall the live project knowledge when freshness matters.
