@@ -53,6 +53,7 @@ Các file generated, private Confluence/Jira ingests, proposals, audit logs và 
 | `draw-sequence` | Tạo Mermaid sequence diagram cho API/service/user/event flow. | Khi cần visualize happy path, error path, retry, timeout, async interaction. |
 | `trace-artifacts` | Kiểm tra consistency và traceability giữa ticket, PRD, acceptance criteria và sequence diagram. | Trước grooming/handoff hoặc khi nhiều artifact có nguy cơ lệch nhau. |
 | `sync-knowledge` | So sánh version page Confluence đã ingest với live Confluence, rồi re-ingest page thay đổi. | Sau khi Confluence update hoặc nghi ngờ knowledge stale. Cần Atlassian MCP/connector. |
+| `query-marketing-solution` | Chuyển câu hỏi tự nhiên thành SQL read-only dựa trên schema Marketing Solution đã có source; hiện hỗ trợ Task List tracking trên `promotion_coordinator`. | Khi cần query/debug campaign, task, reward, milestone, action, status hoặc `extraInfos`. |
 | `grilling` | Stress-test assumption từng câu một trước khi finalize artifact/decision. | Khi muốn review gắt PRD/ticket/plan trước khi commit hướng làm. |
 
 ## Các skill phối hợp với nhau như thế nào?
@@ -81,6 +82,7 @@ Ví dụ:
 - Vẽ sequence diagram: `product-core` → `draw-sequence`
 - Cross-check PRD/ticket/diagram: `product-core` → `trace-artifacts`
 - Sync Confluence knowledge: `product-core` → `sync-knowledge`
+- Query dữ liệu Marketing Solution: `product-core` → `query-marketing-solution`
 
 `product-core` được tách riêng khỏi các drafting skills. Nó phụ trách memory và governance; các task skill chỉ tập trung vào một loại artifact.
 
@@ -329,4 +331,3 @@ Use sync-knowledge. Check the configured Confluence pages and re-ingest changed 
 - Governed changes đi qua proposals.
 - Deprecated knowledge được giữ lại để audit.
 - Generated artifacts cần được validate trước khi handoff.
-

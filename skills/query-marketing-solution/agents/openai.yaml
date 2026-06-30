@@ -1,0 +1,4 @@
+interface:
+  display_name: "Query Marketing Solution"
+  short_description: "Sinh SQL an toàn từ knowledge Marketing Solution"
+  default_prompt: "Use $query-marketing-solution to generate a safe SQL query for Task List tracking."

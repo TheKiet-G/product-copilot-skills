@@ -1,6 +1,6 @@
 # Product Copilot Adapter
 
-Use the modular skills in `skills/`. For product tasks, first invoke `product-core` to recall durable project context, then invoke exactly the task skill needed: `analyze-requirement`, `write-ticket`, `write-prd`, `draw-sequence`, `trace-artifacts`, `sync-knowledge`, or `grilling`.
+Use the modular skills in `skills/`. For product tasks, first invoke `product-core` to recall durable project context, then invoke exactly the task skill needed: `analyze-requirement`, `write-ticket`, `write-prd`, `draw-sequence`, `trace-artifacts`, `sync-knowledge`, `query-marketing-solution`, or `grilling`.
 
 Treat Git-backed files under `knowledge/` as durable memory, not chat history. Load only retrieved context. Never auto-change templates, policies, business rules, or skill instructions; create a proposal.
 
